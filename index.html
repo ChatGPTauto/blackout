@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxeShade | 新加坡全遮光窗帘专家</title>
+    <title>LuxeShade | Singapore's Blackout Curtain Specialists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -40,6 +40,92 @@
             letter-spacing: 0.02em;
         }
 
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+        }
+
+        .current-language {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--warm-white);
+            border: 1.5px solid var(--soft-gray);
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .current-language:hover {
+            border-color: var(--accent-gold);
+            background: var(--cream);
+        }
+
+        .lang-flag {
+            font-size: 1.2rem;
+        }
+
+        .lang-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .language-switcher.active .lang-arrow {
+            transform: rotate(180deg);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--warm-white);
+            border: 1.5px solid var(--soft-gray);
+            border-radius: 2px;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 100;
+        }
+
+        .language-switcher.active .language-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.9rem 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--soft-gray);
+        }
+
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+
+        .lang-option:hover {
+            background: var(--cream);
+        }
+
+        .lang-option.active {
+            background: var(--cream);
+            font-weight: 500;
+        }
+
+        .lang-name {
+            flex: 1;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -72,6 +158,12 @@
             font-weight: 600;
             letter-spacing: 0.05em;
             color: var(--charcoal);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .nav-links {
@@ -111,6 +203,7 @@
             border-radius: 2px;
             font-weight: 500;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .cta-nav:hover {
@@ -227,6 +320,9 @@
             font-size: 1rem;
             color: var(--medium-gray);
             background: linear-gradient(135deg, #f5f3f0 0%, #ffffff 100%);
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
         }
 
         /* Trust Badges */
@@ -443,6 +539,8 @@
             align-items: center;
             justify-content: center;
             color: var(--medium-gray);
+            text-align: center;
+            padding: 2rem;
         }
 
         /* Process Section */
@@ -712,6 +810,8 @@
             width: 90%;
             position: relative;
             animation: modalSlideUp 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideUp {
@@ -878,6 +978,14 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -886,13 +994,40 @@
     <nav>
         <div class="nav-container">
             <div class="logo">LuxeShade</div>
-            <ul class="nav-links">
-                <li><a href="#products">产品目录</a></li>
-                <li><a href="#features">产品优势</a></li>
-                <li><a href="#process">购买流程</a></li>
-                <li><a href="#testimonials">客户评价</a></li>
-                <li><a href="#" class="cta-nav" onclick="openModal('appointment')">免费预约测量</a></li>
-            </ul>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#products" data-i18n="nav.products">Products</a></li>
+                    <li><a href="#features" data-i18n="nav.features">Features</a></li>
+                    <li><a href="#process" data-i18n="nav.process">Process</a></li>
+                    <li><a href="#testimonials" data-i18n="nav.testimonials">Reviews</a></li>
+                    <li><a href="#" class="cta-nav" onclick="openModal('appointment')" data-i18n="nav.cta">Free Measurement</a></li>
+                </ul>
+                <div class="language-switcher" id="languageSwitcher">
+                    <div class="current-language" onclick="toggleLanguageDropdown()">
+                        <span class="lang-flag" id="currentFlag">🇬🇧</span>
+                        <span class="lang-name" id="currentLang" data-i18n="lang.current">English</span>
+                        <span class="lang-arrow">▼</span>
+                    </div>
+                    <div class="language-dropdown">
+                        <div class="lang-option" onclick="changeLanguage('en')">
+                            <span class="lang-flag">🇬🇧</span>
+                            <span class="lang-name">English</span>
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('zh')">
+                            <span class="lang-flag">🇨🇳</span>
+                            <span class="lang-name">中文</span>
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('ja')">
+                            <span class="lang-flag">🇯🇵</span>
+                            <span class="lang-name">日本語</span>
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('ms')">
+                            <span class="lang-flag">🇲🇾</span>
+                            <span class="lang-name">Bahasa Melayu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -900,18 +1035,17 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>100% 全遮光<br>品质生活从此开始</h1>
-                <p class="hero-subtitle">源头工厂直供 · 新加坡本地仓储 · 专业定制服务</p>
+                <h1 data-i18n="hero.title">100% Blackout<br>Quality Living Starts Here</h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Factory Direct · Local Warehouse · Professional Service</p>
                 <div class="hero-cta">
-                    <button class="btn-primary" onclick="openModal('order')">立即选购</button>
-                    <button class="btn-secondary" onclick="openModal('appointment')">预约上门测量</button>
+                    <button class="btn-primary" onclick="openModal('order')" data-i18n="hero.btn1">Shop Now</button>
+                    <button class="btn-secondary" onclick="openModal('appointment')" data-i18n="hero.btn2">Book Measurement</button>
                 </div>
             </div>
             <div class="hero-image">
                 <div class="image-frame">
                     <div class="image-placeholder">
-                        高端全遮光窗帘展示图<br>
-                        <small style="margin-top: 0.5rem; display: block;">优雅卧室场景</small>
+                        <div data-i18n="hero.image">Premium Blackout Curtains<br>Elegant Bedroom Scene</div>
                     </div>
                 </div>
             </div>
@@ -923,23 +1057,23 @@
         <div class="badges-container">
             <div class="badge">
                 <div class="badge-icon">🌙</div>
-                <h3>100% 全遮光保证</h3>
-                <p>三层遮光面料，遮光率达100%</p>
+                <h3 data-i18n="badges.badge1.title">100% Blackout Guarantee</h3>
+                <p data-i18n="badges.badge1.desc">Triple-layer fabric, 100% light blocking</p>
             </div>
             <div class="badge">
                 <div class="badge-icon">💰</div>
-                <h3>工厂直供价格</h3>
-                <p>中国源头工厂，省去中间商差价</p>
+                <h3 data-i18n="badges.badge2.title">Factory Direct Pricing</h3>
+                <p data-i18n="badges.badge2.desc">Direct from China factory, best value</p>
             </div>
             <div class="badge">
                 <div class="badge-icon">🚚</div>
-                <h3>本地快速配送</h3>
-                <p>新加坡仓库现货，3-5天送达</p>
+                <h3 data-i18n="badges.badge3.title">Fast Local Delivery</h3>
+                <p data-i18n="badges.badge3.desc">Singapore warehouse, 3-5 days delivery</p>
             </div>
             <div class="badge">
                 <div class="badge-icon">✨</div>
-                <h3>专业定制服务</h3>
-                <p>免费上门测量，精准定制安装</p>
+                <h3 data-i18n="badges.badge4.title">Professional Custom Service</h3>
+                <p data-i18n="badges.badge4.desc">Free measurement & precise installation</p>
             </div>
         </div>
     </section>
@@ -947,82 +1081,82 @@
     <!-- Products Section -->
     <section class="products" id="products">
         <div class="section-header">
-            <h2>精选产品系列</h2>
-            <p>每一款都经过精心设计，为您的居家生活带来完美遮光体验</p>
+            <h2 data-i18n="products.title">Featured Collections</h2>
+            <p data-i18n="products.subtitle">Each piece carefully designed for perfect blackout experience</p>
         </div>
         <div class="products-grid">
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <span class="product-tag">畅销款</span>
-                    <div>经典纯色系列</div>
+                    <span class="product-tag" data-i18n="products.p1.tag">Bestseller</span>
+                    <div data-i18n="products.p1.image">Classic Solid Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>经典纯色全遮光帘</h3>
-                    <p>简约百搭，适合各种装修风格。多种颜色可选。</p>
-                    <div class="product-price">S$89起</div>
-                    <div class="price-note">价格根据尺寸定制</div>
+                    <h3 data-i18n="products.p1.name">Classic Solid Blackout</h3>
+                    <p data-i18n="products.p1.desc">Minimalist design, suits all decor styles. Various colors available.</p>
+                    <div class="product-price" data-i18n="products.p1.price">From S$89</div>
+                    <div class="price-note" data-i18n="products.p1.note">Custom sizing available</div>
                 </div>
             </div>
 
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <span class="product-tag">新品</span>
-                    <div>奢华提花系列</div>
+                    <span class="product-tag" data-i18n="products.p2.tag">New</span>
+                    <div data-i18n="products.p2.image">Luxury Jacquard Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>奢华提花全遮光帘</h3>
-                    <p>精致提花工艺，提升空间质感与格调。</p>
-                    <div class="product-price">S$129起</div>
-                    <div class="price-note">价格根据尺寸定制</div>
+                    <h3 data-i18n="products.p2.name">Luxury Jacquard Blackout</h3>
+                    <p data-i18n="products.p2.desc">Exquisite jacquard weave, elevates space elegance.</p>
+                    <div class="product-price" data-i18n="products.p2.price">From S$129</div>
+                    <div class="price-note" data-i18n="products.p2.note">Custom sizing available</div>
                 </div>
             </div>
 
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <div>现代简约系列</div>
+                    <div data-i18n="products.p3.image">Modern Minimalist Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>北欧简约全遮光帘</h3>
-                    <p>清新淡雅色调，打造舒适温馨居家氛围。</p>
-                    <div class="product-price">S$99起</div>
-                    <div class="price-note">价格根据尺寸定制</div>
+                    <h3 data-i18n="products.p3.name">Nordic Minimalist Blackout</h3>
+                    <p data-i18n="products.p3.desc">Fresh elegant tones, creates cozy home atmosphere.</p>
+                    <div class="product-price" data-i18n="products.p3.price">From S$99</div>
+                    <div class="price-note" data-i18n="products.p3.note">Custom sizing available</div>
                 </div>
             </div>
 
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <div>儿童卡通系列</div>
+                    <div data-i18n="products.p4.image">Kids Cartoon Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>儿童卡通全遮光帘</h3>
-                    <p>可爱图案设计，守护孩子优质睡眠时光。</p>
-                    <div class="product-price">S$95起</div>
-                    <div class="price-note">价格根据尺寸定制</div>
+                    <h3 data-i18n="products.p4.name">Kids Cartoon Blackout</h3>
+                    <p data-i18n="products.p4.desc">Cute patterns, protects children's quality sleep.</p>
+                    <div class="product-price" data-i18n="products.p4.price">From S$95</div>
+                    <div class="price-note" data-i18n="products.p4.note">Custom sizing available</div>
                 </div>
             </div>
 
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <span class="product-tag">热销</span>
-                    <div>智能电动系列</div>
+                    <span class="product-tag" data-i18n="products.p5.tag">Popular</span>
+                    <div data-i18n="products.p5.image">Smart Motorized Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>智能电动全遮光帘</h3>
-                    <p>一键遥控开合，智能家居轻松升级。</p>
-                    <div class="product-price">S$199起</div>
-                    <div class="price-note">含电动轨道系统</div>
+                    <h3 data-i18n="products.p5.name">Smart Motorized Blackout</h3>
+                    <p data-i18n="products.p5.desc">One-touch remote control, smart home upgrade.</p>
+                    <div class="product-price" data-i18n="products.p5.price">From S$199</div>
+                    <div class="price-note" data-i18n="products.p5.note">Includes motorized track system</div>
                 </div>
             </div>
 
             <div class="product-card" onclick="openModal('order')">
                 <div class="product-image">
-                    <div>定制设计系列</div>
+                    <div data-i18n="products.p6.image">Custom Design Collection</div>
                 </div>
                 <div class="product-info">
-                    <h3>专属定制全遮光帘</h3>
-                    <p>根据您的需求量身定制，独一无二的专属设计。</p>
-                    <div class="product-price">联系咨询</div>
-                    <div class="price-note">专业设计师一对一服务</div>
+                    <h3 data-i18n="products.p6.name">Bespoke Custom Blackout</h3>
+                    <p data-i18n="products.p6.desc">Tailored to your needs, unique exclusive design.</p>
+                    <div class="product-price" data-i18n="products.p6.price">Contact Us</div>
+                    <div class="price-note" data-i18n="products.p6.note">One-on-one designer service</div>
                 </div>
             </div>
         </div>
@@ -1032,41 +1166,40 @@
     <section class="features" id="features">
         <div class="features-grid">
             <div class="feature-content">
-                <h2>为什么选择我们？</h2>
+                <h2 data-i18n="features.title">Why Choose Us?</h2>
                 <ul class="feature-list">
                     <li class="feature-item">
                         <div class="feature-icon">🌙</div>
                         <div class="feature-text">
-                            <h3>专业三层遮光技术</h3>
-                            <p>采用独特的三层遮光面料，外层装饰层、中层遮光层、内层保护层，确保100%遮光效果，营造完美睡眠环境。</p>
+                            <h3 data-i18n="features.f1.title">Professional Triple-Layer Technology</h3>
+                            <p data-i18n="features.f1.desc">Unique three-layer blackout fabric: decorative outer layer, blackout middle layer, protective inner layer ensures 100% light blocking for perfect sleep environment.</p>
                         </div>
                     </li>
                     <li class="feature-item">
                         <div class="feature-icon">🏭</div>
                         <div class="feature-text">
-                            <h3>源头工厂直接供应</h3>
-                            <p>拥有自主生产工厂，省去中间商环节，以最优惠的价格为您提供高品质产品，性价比远超市场同类产品。</p>
+                            <h3 data-i18n="features.f2.title">Direct Factory Supply</h3>
+                            <p data-i18n="features.f2.desc">Own production facility eliminates middlemen, offering premium quality at best prices, far exceeding market value.</p>
                         </div>
                     </li>
                     <li class="feature-item">
                         <div class="feature-icon">📦</div>
                         <div class="feature-text">
-                            <h3>新加坡本地仓储</h3>
-                            <p>在新加坡设有专业仓库，常备现货，下单后3-5个工作日即可送达，急需客户更可享受加急服务。</p>
+                            <h3 data-i18n="features.f3.title">Singapore Local Warehouse</h3>
+                            <p data-i18n="features.f3.desc">Professional warehouse in Singapore with ready stock, 3-5 working days delivery, express service available for urgent orders.</p>
                         </div>
                     </li>
                     <li class="feature-item">
                         <div class="feature-icon">📏</div>
                         <div class="feature-text">
-                            <h3>免费上门测量安装</h3>
-                            <p>专业团队提供免费上门测量服务，精确定制尺寸，确保完美贴合窗户。提供专业安装指导或安装服务。</p>
+                            <h3 data-i18n="features.f4.title">Free Measurement & Installation</h3>
+                            <p data-i18n="features.f4.desc">Professional team provides free on-site measurement, precise custom sizing ensures perfect window fit. Installation guidance or service available.</p>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="feature-visual">
-                三层遮光面料结构示意图<br>
-                <small style="margin-top: 0.5rem; display: block;">展示专业遮光技术</small>
+                <div data-i18n="features.visual">Triple-Layer Blackout Fabric Structure<br>Professional Blackout Technology</div>
             </div>
         </div>
     </section>
@@ -1074,29 +1207,29 @@
     <!-- Process Section -->
     <section class="process" id="process">
         <div class="section-header">
-            <h2>简单四步，完成定制</h2>
-            <p>从咨询到安装，全程专业服务</p>
+            <h2 data-i18n="process.title">Simple 4-Step Process</h2>
+            <p data-i18n="process.subtitle">From consultation to installation, full professional service</p>
         </div>
         <div class="process-steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <h3>在线咨询选款</h3>
-                <p>浏览产品目录，选择心仪款式，或联系客服获取专业建议</p>
+                <h3 data-i18n="process.step1.title">Browse & Consult</h3>
+                <p data-i18n="process.step1.desc">Browse catalog, select favorite style, or contact us for professional advice</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <h3>预约上门测量</h3>
-                <p>填写预约表单，我们将安排专业人员免费上门测量窗户尺寸</p>
+                <h3 data-i18n="process.step2.title">Book Measurement</h3>
+                <p data-i18n="process.step2.desc">Fill booking form, we'll arrange free on-site window measurement</p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <h3>确认订单付款</h3>
-                <p>根据测量尺寸确认最终价格，支付订金后开始生产定制</p>
+                <h3 data-i18n="process.step3.title">Confirm & Pay</h3>
+                <p data-i18n="process.step3.desc">Confirm final price based on measurements, pay deposit to start production</p>
             </div>
             <div class="step">
                 <div class="step-number">4</div>
-                <h3>配送安装完成</h3>
-                <p>3-5天送货上门，可选择自行安装或预约专业安装服务</p>
+                <h3 data-i18n="process.step4.title">Delivery & Install</h3>
+                <p data-i18n="process.step4.desc">3-5 days home delivery, choose self-install or professional installation service</p>
             </div>
         </div>
     </section>
@@ -1104,25 +1237,25 @@
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="section-header">
-            <h2>客户真实评价</h2>
-            <p>上千位新加坡客户的信赖之选</p>
+            <h2 data-i18n="testimonials.title">Customer Reviews</h2>
+            <p data-i18n="testimonials.subtitle">Trusted by thousands of Singapore customers</p>
         </div>
         <div class="testimonial-grid">
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"遮光效果非常好！白天拉上窗帘后房间完全黑暗，终于可以好好补眠了。价格也很实惠，比商场便宜很多。"</p>
+                <p class="testimonial-text" data-i18n="testimonials.t1.text">"Excellent blackout effect! Room completely dark when curtains closed during daytime. Finally can catch up on sleep. Great price too, much cheaper than malls."</p>
                 <div class="testimonial-author">Sarah Tan</div>
                 <div class="testimonial-location">Jurong West</div>
             </div>
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"服务很专业！从测量到安装全程跟进，师傅很细心。窗帘质量也很好，做工精致，完全超出预期。"</p>
+                <p class="testimonial-text" data-i18n="testimonials.t2.text">"Very professional service! From measurement to installation, fully supported. Curtain quality excellent, workmanship detailed, completely exceeded expectations."</p>
                 <div class="testimonial-author">Michael Lim</div>
                 <div class="testimonial-location">Tampines</div>
             </div>
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"给宝宝房间定制的，颜色和图案都很可爱。遮光效果特别好，宝宝现在白天也能睡得很香。强烈推荐！"</p>
+                <p class="testimonial-text" data-i18n="testimonials.t3.text">"Custom made for baby's room, colors and patterns very cute. Blackout effect especially good, baby now sleeps well during daytime. Highly recommend!"</p>
                 <div class="testimonial-author">Lisa Wong</div>
                 <div class="testimonial-location">Bukit Timah</div>
             </div>
@@ -1132,11 +1265,11 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content">
-            <h2>准备好改善您的睡眠质量了吗？</h2>
-            <p>立即联系我们，享受专业的全遮光窗帘定制服务</p>
+            <h2 data-i18n="cta.title">Ready to Improve Your Sleep Quality?</h2>
+            <p data-i18n="cta.subtitle">Contact us now for professional blackout curtain custom service</p>
             <div class="cta-buttons">
-                <button class="btn-light" onclick="openModal('appointment')">免费预约测量</button>
-                <button class="btn-outline" onclick="openModal('contact')">在线咨询</button>
+                <button class="btn-light" onclick="openModal('appointment')" data-i18n="cta.btn1">Free Measurement</button>
+                <button class="btn-outline" onclick="openModal('contact')" data-i18n="cta.btn2">Contact Us</button>
             </div>
         </div>
     </section>
@@ -1146,38 +1279,38 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <h3>LuxeShade</h3>
-                <p>专注全遮光窗帘设计与生产<br>为新加坡家庭带来优质睡眠体验</p>
+                <p data-i18n="footer.brand">Specialized in blackout curtain design & production<br>Bringing quality sleep to Singapore homes</p>
             </div>
             <div class="footer-links">
-                <h4>产品中心</h4>
+                <h4 data-i18n="footer.products.title">Products</h4>
                 <ul>
-                    <li><a href="#products">经典纯色系列</a></li>
-                    <li><a href="#products">奢华提花系列</a></li>
-                    <li><a href="#products">北欧简约系列</a></li>
-                    <li><a href="#products">智能电动系列</a></li>
+                    <li><a href="#products" data-i18n="footer.products.l1">Classic Solid Series</a></li>
+                    <li><a href="#products" data-i18n="footer.products.l2">Luxury Jacquard Series</a></li>
+                    <li><a href="#products" data-i18n="footer.products.l3">Nordic Minimalist Series</a></li>
+                    <li><a href="#products" data-i18n="footer.products.l4">Smart Motorized Series</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h4>客户服务</h4>
+                <h4 data-i18n="footer.service.title">Customer Service</h4>
                 <ul>
-                    <li><a href="#" onclick="openModal('appointment')">预约测量</a></li>
-                    <li><a href="#" onclick="openModal('order')">在线下单</a></li>
-                    <li><a href="#" onclick="openModal('contact')">联系我们</a></li>
-                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#" onclick="openModal('appointment')" data-i18n="footer.service.l1">Book Measurement</a></li>
+                    <li><a href="#" onclick="openModal('order')" data-i18n="footer.service.l2">Order Online</a></li>
+                    <li><a href="#" onclick="openModal('contact')" data-i18n="footer.service.l3">Contact Us</a></li>
+                    <li><a href="#" data-i18n="footer.service.l4">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h4>联系方式</h4>
+                <h4 data-i18n="footer.contact.title">Contact</h4>
                 <ul>
                     <li><a href="tel:+6512345678">+65 1234 5678</a></li>
                     <li><a href="mailto:info@luxeshade.sg">info@luxeshade.sg</a></li>
-                    <li><a href="#">WhatsApp咨询</a></li>
-                    <li><a href="#">工作时间: 9AM-6PM</a></li>
+                    <li><a href="#" data-i18n="footer.contact.l3">WhatsApp</a></li>
+                    <li><a href="#" data-i18n="footer.contact.l4">Hours: 9AM-6PM</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 LuxeShade Singapore. All rights reserved. | 新加坡注册企业</p>
+            <p data-i18n="footer.copyright">&copy; 2024 LuxeShade Singapore. All rights reserved. | Registered Singapore Business</p>
         </div>
     </footer>
 
@@ -1186,42 +1319,42 @@
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('order')">&times;</button>
-            <h2>在线下单</h2>
-            <p>请填写以下信息，我们将尽快与您联系</p>
+            <h2 data-i18n="modal.order.title">Order Online</h2>
+            <p data-i18n="modal.order.subtitle">Please fill in the following information, we will contact you soon</p>
             <form onsubmit="handleSubmit(event, 'order')">
                 <div class="form-group">
-                    <label>您的姓名 *</label>
-                    <input type="text" required placeholder="请输入您的姓名">
+                    <label data-i18n="modal.order.name">Your Name *</label>
+                    <input type="text" required placeholder="">
                 </div>
                 <div class="form-group">
-                    <label>联系电话 *</label>
+                    <label data-i18n="modal.order.phone">Contact Number *</label>
                     <input type="tel" required placeholder="+65 1234 5678">
                 </div>
                 <div class="form-group">
-                    <label>电子邮箱</label>
+                    <label data-i18n="modal.order.email">Email</label>
                     <input type="email" placeholder="your@email.com">
                 </div>
                 <div class="form-group">
-                    <label>选择产品系列 *</label>
-                    <select required>
-                        <option value="">请选择</option>
-                        <option>经典纯色全遮光帘</option>
-                        <option>奢华提花全遮光帘</option>
-                        <option>北欧简约全遮光帘</option>
-                        <option>儿童卡通全遮光帘</option>
-                        <option>智能电动全遮光帘</option>
-                        <option>专属定制全遮光帘</option>
+                    <label data-i18n="modal.order.product">Select Product *</label>
+                    <select required id="productSelect">
+                        <option value="" data-i18n="modal.order.select">Please select</option>
+                        <option data-i18n="modal.order.p1">Classic Solid Blackout</option>
+                        <option data-i18n="modal.order.p2">Luxury Jacquard Blackout</option>
+                        <option data-i18n="modal.order.p3">Nordic Minimalist Blackout</option>
+                        <option data-i18n="modal.order.p4">Kids Cartoon Blackout</option>
+                        <option data-i18n="modal.order.p5">Smart Motorized Blackout</option>
+                        <option data-i18n="modal.order.p6">Bespoke Custom Blackout</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>窗户数量</label>
-                    <input type="number" placeholder="例如: 3">
+                    <label data-i18n="modal.order.quantity">Number of Windows</label>
+                    <input type="number" placeholder="e.g. 3">
                 </div>
                 <div class="form-group">
-                    <label>备注说明</label>
-                    <textarea rows="3" placeholder="请告诉我们您的特殊需求或偏好"></textarea>
+                    <label data-i18n="modal.order.notes">Notes</label>
+                    <textarea rows="3" placeholder=""></textarea>
                 </div>
-                <button type="submit" class="form-submit">提交订单</button>
+                <button type="submit" class="form-submit" data-i18n="modal.order.submit">Submit Order</button>
             </form>
         </div>
     </div>
@@ -1230,43 +1363,43 @@
     <div id="appointmentModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('appointment')">&times;</button>
-            <h2>预约上门测量</h2>
-            <p>免费提供专业测量服务，请选择方便的时间</p>
+            <h2 data-i18n="modal.appointment.title">Book Measurement</h2>
+            <p data-i18n="modal.appointment.subtitle">Free professional measurement service, please select convenient time</p>
             <form onsubmit="handleSubmit(event, 'appointment')">
                 <div class="form-group">
-                    <label>您的姓名 *</label>
-                    <input type="text" required placeholder="请输入您的姓名">
+                    <label data-i18n="modal.appointment.name">Your Name *</label>
+                    <input type="text" required placeholder="">
                 </div>
                 <div class="form-group">
-                    <label>联系电话 *</label>
+                    <label data-i18n="modal.appointment.phone">Contact Number *</label>
                     <input type="tel" required placeholder="+65 1234 5678">
                 </div>
                 <div class="form-group">
-                    <label>地址 *</label>
-                    <input type="text" required placeholder="请输入详细地址">
+                    <label data-i18n="modal.appointment.address">Address *</label>
+                    <input type="text" required placeholder="">
                 </div>
                 <div class="form-group">
-                    <label>邮编</label>
-                    <input type="text" placeholder="例如: 123456">
+                    <label data-i18n="modal.appointment.postal">Postal Code</label>
+                    <input type="text" placeholder="e.g. 123456">
                 </div>
                 <div class="form-group">
-                    <label>预约日期 *</label>
+                    <label data-i18n="modal.appointment.date">Appointment Date *</label>
                     <input type="date" required>
                 </div>
                 <div class="form-group">
-                    <label>偏好时间段 *</label>
-                    <select required>
-                        <option value="">请选择</option>
-                        <option>上午 (9AM - 12PM)</option>
-                        <option>下午 (2PM - 5PM)</option>
-                        <option>傍晚 (5PM - 8PM)</option>
+                    <label data-i18n="modal.appointment.time">Preferred Time *</label>
+                    <select required id="timeSelect">
+                        <option value="" data-i18n="modal.appointment.selectTime">Please select</option>
+                        <option data-i18n="modal.appointment.morning">Morning (9AM - 12PM)</option>
+                        <option data-i18n="modal.appointment.afternoon">Afternoon (2PM - 5PM)</option>
+                        <option data-i18n="modal.appointment.evening">Evening (5PM - 8PM)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>备注</label>
-                    <textarea rows="2" placeholder="其他需要说明的信息"></textarea>
+                    <label data-i18n="modal.appointment.notes">Notes</label>
+                    <textarea rows="2" placeholder=""></textarea>
                 </div>
-                <button type="submit" class="form-submit">确认预约</button>
+                <button type="submit" class="form-submit" data-i18n="modal.appointment.submit">Confirm Booking</button>
             </form>
         </div>
     </div>
@@ -1275,27 +1408,633 @@
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('contact')">&times;</button>
-            <h2>在线咨询</h2>
-            <p>有任何问题？我们随时为您解答</p>
+            <h2 data-i18n="modal.contact.title">Contact Us</h2>
+            <p data-i18n="modal.contact.subtitle">Any questions? We're here to help</p>
             <form onsubmit="handleSubmit(event, 'contact')">
                 <div class="form-group">
-                    <label>您的姓名 *</label>
-                    <input type="text" required placeholder="请输入您的姓名">
+                    <label data-i18n="modal.contact.name">Your Name *</label>
+                    <input type="text" required placeholder="">
                 </div>
                 <div class="form-group">
-                    <label>联系方式 *</label>
-                    <input type="text" required placeholder="电话或邮箱">
+                    <label data-i18n="modal.contact.contact">Contact Info *</label>
+                    <input type="text" required placeholder="">
                 </div>
                 <div class="form-group">
-                    <label>咨询内容 *</label>
-                    <textarea rows="5" required placeholder="请详细描述您的问题或需求"></textarea>
+                    <label data-i18n="modal.contact.message">Message *</label>
+                    <textarea rows="5" required placeholder=""></textarea>
                 </div>
-                <button type="submit" class="form-submit">发送咨询</button>
+                <button type="submit" class="form-submit" data-i18n="modal.contact.submit">Send Message</button>
             </form>
         </div>
     </div>
 
     <script>
+        // Translations
+        const translations = {
+            en: {
+                'lang.current': 'English',
+                'nav.products': 'Products',
+                'nav.features': 'Features',
+                'nav.process': 'Process',
+                'nav.testimonials': 'Reviews',
+                'nav.cta': 'Free Measurement',
+                'hero.title': '100% Blackout<br>Quality Living Starts Here',
+                'hero.subtitle': 'Factory Direct · Local Warehouse · Professional Service',
+                'hero.btn1': 'Shop Now',
+                'hero.btn2': 'Book Measurement',
+                'hero.image': 'Premium Blackout Curtains<br>Elegant Bedroom Scene',
+                'badges.badge1.title': '100% Blackout Guarantee',
+                'badges.badge1.desc': 'Triple-layer fabric, 100% light blocking',
+                'badges.badge2.title': 'Factory Direct Pricing',
+                'badges.badge2.desc': 'Direct from China factory, best value',
+                'badges.badge3.title': 'Fast Local Delivery',
+                'badges.badge3.desc': 'Singapore warehouse, 3-5 days delivery',
+                'badges.badge4.title': 'Professional Custom Service',
+                'badges.badge4.desc': 'Free measurement & precise installation',
+                'products.title': 'Featured Collections',
+                'products.subtitle': 'Each piece carefully designed for perfect blackout experience',
+                'products.p1.tag': 'Bestseller',
+                'products.p1.image': 'Classic Solid Collection',
+                'products.p1.name': 'Classic Solid Blackout',
+                'products.p1.desc': 'Minimalist design, suits all decor styles. Various colors available.',
+                'products.p1.price': 'From S$89',
+                'products.p1.note': 'Custom sizing available',
+                'products.p2.tag': 'New',
+                'products.p2.image': 'Luxury Jacquard Collection',
+                'products.p2.name': 'Luxury Jacquard Blackout',
+                'products.p2.desc': 'Exquisite jacquard weave, elevates space elegance.',
+                'products.p2.price': 'From S$129',
+                'products.p2.note': 'Custom sizing available',
+                'products.p3.image': 'Modern Minimalist Collection',
+                'products.p3.name': 'Nordic Minimalist Blackout',
+                'products.p3.desc': 'Fresh elegant tones, creates cozy home atmosphere.',
+                'products.p3.price': 'From S$99',
+                'products.p3.note': 'Custom sizing available',
+                'products.p4.image': 'Kids Cartoon Collection',
+                'products.p4.name': 'Kids Cartoon Blackout',
+                'products.p4.desc': 'Cute patterns, protects children\'s quality sleep.',
+                'products.p4.price': 'From S$95',
+                'products.p4.note': 'Custom sizing available',
+                'products.p5.tag': 'Popular',
+                'products.p5.image': 'Smart Motorized Collection',
+                'products.p5.name': 'Smart Motorized Blackout',
+                'products.p5.desc': 'One-touch remote control, smart home upgrade.',
+                'products.p5.price': 'From S$199',
+                'products.p5.note': 'Includes motorized track system',
+                'products.p6.image': 'Custom Design Collection',
+                'products.p6.name': 'Bespoke Custom Blackout',
+                'products.p6.desc': 'Tailored to your needs, unique exclusive design.',
+                'products.p6.price': 'Contact Us',
+                'products.p6.note': 'One-on-one designer service',
+                'features.title': 'Why Choose Us?',
+                'features.f1.title': 'Professional Triple-Layer Technology',
+                'features.f1.desc': 'Unique three-layer blackout fabric: decorative outer layer, blackout middle layer, protective inner layer ensures 100% light blocking for perfect sleep environment.',
+                'features.f2.title': 'Direct Factory Supply',
+                'features.f2.desc': 'Own production facility eliminates middlemen, offering premium quality at best prices, far exceeding market value.',
+                'features.f3.title': 'Singapore Local Warehouse',
+                'features.f3.desc': 'Professional warehouse in Singapore with ready stock, 3-5 working days delivery, express service available for urgent orders.',
+                'features.f4.title': 'Free Measurement & Installation',
+                'features.f4.desc': 'Professional team provides free on-site measurement, precise custom sizing ensures perfect window fit. Installation guidance or service available.',
+                'features.visual': 'Triple-Layer Blackout Fabric Structure<br>Professional Blackout Technology',
+                'process.title': 'Simple 4-Step Process',
+                'process.subtitle': 'From consultation to installation, full professional service',
+                'process.step1.title': 'Browse & Consult',
+                'process.step1.desc': 'Browse catalog, select favorite style, or contact us for professional advice',
+                'process.step2.title': 'Book Measurement',
+                'process.step2.desc': 'Fill booking form, we\'ll arrange free on-site window measurement',
+                'process.step3.title': 'Confirm & Pay',
+                'process.step3.desc': 'Confirm final price based on measurements, pay deposit to start production',
+                'process.step4.title': 'Delivery & Install',
+                'process.step4.desc': '3-5 days home delivery, choose self-install or professional installation service',
+                'testimonials.title': 'Customer Reviews',
+                'testimonials.subtitle': 'Trusted by thousands of Singapore customers',
+                'testimonials.t1.text': '"Excellent blackout effect! Room completely dark when curtains closed during daytime. Finally can catch up on sleep. Great price too, much cheaper than malls."',
+                'testimonials.t2.text': '"Very professional service! From measurement to installation, fully supported. Curtain quality excellent, workmanship detailed, completely exceeded expectations."',
+                'testimonials.t3.text': '"Custom made for baby\'s room, colors and patterns very cute. Blackout effect especially good, baby now sleeps well during daytime. Highly recommend!"',
+                'cta.title': 'Ready to Improve Your Sleep Quality?',
+                'cta.subtitle': 'Contact us now for professional blackout curtain custom service',
+                'cta.btn1': 'Free Measurement',
+                'cta.btn2': 'Contact Us',
+                'footer.brand': 'Specialized in blackout curtain design & production<br>Bringing quality sleep to Singapore homes',
+                'footer.products.title': 'Products',
+                'footer.products.l1': 'Classic Solid Series',
+                'footer.products.l2': 'Luxury Jacquard Series',
+                'footer.products.l3': 'Nordic Minimalist Series',
+                'footer.products.l4': 'Smart Motorized Series',
+                'footer.service.title': 'Customer Service',
+                'footer.service.l1': 'Book Measurement',
+                'footer.service.l2': 'Order Online',
+                'footer.service.l3': 'Contact Us',
+                'footer.service.l4': 'FAQ',
+                'footer.contact.title': 'Contact',
+                'footer.contact.l3': 'WhatsApp',
+                'footer.contact.l4': 'Hours: 9AM-6PM',
+                'footer.copyright': '© 2024 LuxeShade Singapore. All rights reserved. | Registered Singapore Business',
+                'modal.order.title': 'Order Online',
+                'modal.order.subtitle': 'Please fill in the following information, we will contact you soon',
+                'modal.order.name': 'Your Name *',
+                'modal.order.phone': 'Contact Number *',
+                'modal.order.email': 'Email',
+                'modal.order.product': 'Select Product *',
+                'modal.order.select': 'Please select',
+                'modal.order.p1': 'Classic Solid Blackout',
+                'modal.order.p2': 'Luxury Jacquard Blackout',
+                'modal.order.p3': 'Nordic Minimalist Blackout',
+                'modal.order.p4': 'Kids Cartoon Blackout',
+                'modal.order.p5': 'Smart Motorized Blackout',
+                'modal.order.p6': 'Bespoke Custom Blackout',
+                'modal.order.quantity': 'Number of Windows',
+                'modal.order.notes': 'Notes',
+                'modal.order.submit': 'Submit Order',
+                'modal.appointment.title': 'Book Measurement',
+                'modal.appointment.subtitle': 'Free professional measurement service, please select convenient time',
+                'modal.appointment.name': 'Your Name *',
+                'modal.appointment.phone': 'Contact Number *',
+                'modal.appointment.address': 'Address *',
+                'modal.appointment.postal': 'Postal Code',
+                'modal.appointment.date': 'Appointment Date *',
+                'modal.appointment.time': 'Preferred Time *',
+                'modal.appointment.selectTime': 'Please select',
+                'modal.appointment.morning': 'Morning (9AM - 12PM)',
+                'modal.appointment.afternoon': 'Afternoon (2PM - 5PM)',
+                'modal.appointment.evening': 'Evening (5PM - 8PM)',
+                'modal.appointment.notes': 'Notes',
+                'modal.appointment.submit': 'Confirm Booking',
+                'modal.contact.title': 'Contact Us',
+                'modal.contact.subtitle': 'Any questions? We\'re here to help',
+                'modal.contact.name': 'Your Name *',
+                'modal.contact.contact': 'Contact Info *',
+                'modal.contact.message': 'Message *',
+                'modal.contact.submit': 'Send Message'
+            },
+            zh: {
+                'lang.current': '中文',
+                'nav.products': '产品目录',
+                'nav.features': '产品优势',
+                'nav.process': '购买流程',
+                'nav.testimonials': '客户评价',
+                'nav.cta': '免费预约测量',
+                'hero.title': '100% 全遮光<br>品质生活从此开始',
+                'hero.subtitle': '源头工厂直供 · 新加坡本地仓储 · 专业定制服务',
+                'hero.btn1': '立即选购',
+                'hero.btn2': '预约上门测量',
+                'hero.image': '高端全遮光窗帘展示图<br>优雅卧室场景',
+                'badges.badge1.title': '100% 全遮光保证',
+                'badges.badge1.desc': '三层遮光面料，遮光率达100%',
+                'badges.badge2.title': '工厂直供价格',
+                'badges.badge2.desc': '中国源头工厂，省去中间商差价',
+                'badges.badge3.title': '本地快速配送',
+                'badges.badge3.desc': '新加坡仓库现货，3-5天送达',
+                'badges.badge4.title': '专业定制服务',
+                'badges.badge4.desc': '免费上门测量，精准定制安装',
+                'products.title': '精选产品系列',
+                'products.subtitle': '每一款都经过精心设计，为您的居家生活带来完美遮光体验',
+                'products.p1.tag': '畅销款',
+                'products.p1.image': '经典纯色系列',
+                'products.p1.name': '经典纯色全遮光帘',
+                'products.p1.desc': '简约百搭，适合各种装修风格。多种颜色可选。',
+                'products.p1.price': 'S$89起',
+                'products.p1.note': '价格根据尺寸定制',
+                'products.p2.tag': '新品',
+                'products.p2.image': '奢华提花系列',
+                'products.p2.name': '奢华提花全遮光帘',
+                'products.p2.desc': '精致提花工艺，提升空间质感与格调。',
+                'products.p2.price': 'S$129起',
+                'products.p2.note': '价格根据尺寸定制',
+                'products.p3.image': '现代简约系列',
+                'products.p3.name': '北欧简约全遮光帘',
+                'products.p3.desc': '清新淡雅色调，打造舒适温馨居家氛围。',
+                'products.p3.price': 'S$99起',
+                'products.p3.note': '价格根据尺寸定制',
+                'products.p4.image': '儿童卡通系列',
+                'products.p4.name': '儿童卡通全遮光帘',
+                'products.p4.desc': '可爱图案设计，守护孩子优质睡眠时光。',
+                'products.p4.price': 'S$95起',
+                'products.p4.note': '价格根据尺寸定制',
+                'products.p5.tag': '热销',
+                'products.p5.image': '智能电动系列',
+                'products.p5.name': '智能电动全遮光帘',
+                'products.p5.desc': '一键遥控开合，智能家居轻松升级。',
+                'products.p5.price': 'S$199起',
+                'products.p5.note': '含电动轨道系统',
+                'products.p6.image': '定制设计系列',
+                'products.p6.name': '专属定制全遮光帘',
+                'products.p6.desc': '根据您的需求量身定制，独一无二的专属设计。',
+                'products.p6.price': '联系咨询',
+                'products.p6.note': '专业设计师一对一服务',
+                'features.title': '为什么选择我们？',
+                'features.f1.title': '专业三层遮光技术',
+                'features.f1.desc': '采用独特的三层遮光面料，外层装饰层、中层遮光层、内层保护层，确保100%遮光效果，营造完美睡眠环境。',
+                'features.f2.title': '源头工厂直接供应',
+                'features.f2.desc': '拥有自主生产工厂，省去中间商环节，以最优惠的价格为您提供高品质产品，性价比远超市场同类产品。',
+                'features.f3.title': '新加坡本地仓储',
+                'features.f3.desc': '在新加坡设有专业仓库，常备现货，下单后3-5个工作日即可送达，急需客户更可享受加急服务。',
+                'features.f4.title': '免费上门测量安装',
+                'features.f4.desc': '专业团队提供免费上门测量服务，精确定制尺寸，确保完美贴合窗户。提供专业安装指导或安装服务。',
+                'features.visual': '三层遮光面料结构示意图<br>展示专业遮光技术',
+                'process.title': '简单四步，完成定制',
+                'process.subtitle': '从咨询到安装，全程专业服务',
+                'process.step1.title': '在线咨询选款',
+                'process.step1.desc': '浏览产品目录，选择心仪款式，或联系客服获取专业建议',
+                'process.step2.title': '预约上门测量',
+                'process.step2.desc': '填写预约表单，我们将安排专业人员免费上门测量窗户尺寸',
+                'process.step3.title': '确认订单付款',
+                'process.step3.desc': '根据测量尺寸确认最终价格，支付订金后开始生产定制',
+                'process.step4.title': '配送安装完成',
+                'process.step4.desc': '3-5天送货上门，可选择自行安装或预约专业安装服务',
+                'testimonials.title': '客户真实评价',
+                'testimonials.subtitle': '上千位新加坡客户的信赖之选',
+                'testimonials.t1.text': '"遮光效果非常好！白天拉上窗帘后房间完全黑暗，终于可以好好补眠了。价格也很实惠，比商场便宜很多。"',
+                'testimonials.t2.text': '"服务很专业！从测量到安装全程跟进，师傅很细心。窗帘质量也很好，做工精致，完全超出预期。"',
+                'testimonials.t3.text': '"给宝宝房间定制的，颜色和图案都很可爱。遮光效果特别好，宝宝现在白天也能睡得很香。强烈推荐！"',
+                'cta.title': '准备好改善您的睡眠质量了吗？',
+                'cta.subtitle': '立即联系我们，享受专业的全遮光窗帘定制服务',
+                'cta.btn1': '免费预约测量',
+                'cta.btn2': '在线咨询',
+                'footer.brand': '专注全遮光窗帘设计与生产<br>为新加坡家庭带来优质睡眠体验',
+                'footer.products.title': '产品中心',
+                'footer.products.l1': '经典纯色系列',
+                'footer.products.l2': '奢华提花系列',
+                'footer.products.l3': '北欧简约系列',
+                'footer.products.l4': '智能电动系列',
+                'footer.service.title': '客户服务',
+                'footer.service.l1': '预约测量',
+                'footer.service.l2': '在线下单',
+                'footer.service.l3': '联系我们',
+                'footer.service.l4': '常见问题',
+                'footer.contact.title': '联系方式',
+                'footer.contact.l3': 'WhatsApp咨询',
+                'footer.contact.l4': '工作时间: 9AM-6PM',
+                'footer.copyright': '© 2024 LuxeShade Singapore. All rights reserved. | 新加坡注册企业',
+                'modal.order.title': '在线下单',
+                'modal.order.subtitle': '请填写以下信息，我们将尽快与您联系',
+                'modal.order.name': '您的姓名 *',
+                'modal.order.phone': '联系电话 *',
+                'modal.order.email': '电子邮箱',
+                'modal.order.product': '选择产品系列 *',
+                'modal.order.select': '请选择',
+                'modal.order.p1': '经典纯色全遮光帘',
+                'modal.order.p2': '奢华提花全遮光帘',
+                'modal.order.p3': '北欧简约全遮光帘',
+                'modal.order.p4': '儿童卡通全遮光帘',
+                'modal.order.p5': '智能电动全遮光帘',
+                'modal.order.p6': '专属定制全遮光帘',
+                'modal.order.quantity': '窗户数量',
+                'modal.order.notes': '备注说明',
+                'modal.order.submit': '提交订单',
+                'modal.appointment.title': '预约上门测量',
+                'modal.appointment.subtitle': '免费提供专业测量服务，请选择方便的时间',
+                'modal.appointment.name': '您的姓名 *',
+                'modal.appointment.phone': '联系电话 *',
+                'modal.appointment.address': '地址 *',
+                'modal.appointment.postal': '邮编',
+                'modal.appointment.date': '预约日期 *',
+                'modal.appointment.time': '偏好时间段 *',
+                'modal.appointment.selectTime': '请选择',
+                'modal.appointment.morning': '上午 (9AM - 12PM)',
+                'modal.appointment.afternoon': '下午 (2PM - 5PM)',
+                'modal.appointment.evening': '傍晚 (5PM - 8PM)',
+                'modal.appointment.notes': '备注',
+                'modal.appointment.submit': '确认预约',
+                'modal.contact.title': '在线咨询',
+                'modal.contact.subtitle': '有任何问题？我们随时为您解答',
+                'modal.contact.name': '您的姓名 *',
+                'modal.contact.contact': '联系方式 *',
+                'modal.contact.message': '咨询内容 *',
+                'modal.contact.submit': '发送咨询'
+            },
+            ja: {
+                'lang.current': '日本語',
+                'nav.products': '製品一覧',
+                'nav.features': '特徴',
+                'nav.process': 'ご利用の流れ',
+                'nav.testimonials': 'お客様の声',
+                'nav.cta': '無料採寸予約',
+                'hero.title': '100% 遮光<br>上質な暮らしを実現',
+                'hero.subtitle': '工場直送 · シンガポール倉庫完備 · プロのサービス',
+                'hero.btn1': '今すぐ購入',
+                'hero.btn2': '採寸予約',
+                'hero.image': 'プレミアム遮光カーテン<br>エレガントな寝室シーン',
+                'badges.badge1.title': '100% 遮光保証',
+                'badges.badge1.desc': '三層構造生地、完全遮光',
+                'badges.badge2.title': '工場直送価格',
+                'badges.badge2.desc': '中国工場直送、最高のコスパ',
+                'badges.badge3.title': '迅速な配送',
+                'badges.badge3.desc': 'シンガポール倉庫、3-5日配送',
+                'badges.badge4.title': 'プロのカスタムサービス',
+                'badges.badge4.desc': '無料採寸・精密設置',
+                'products.title': '厳選コレクション',
+                'products.subtitle': 'それぞれ丁寧にデザインされた完璧な遮光体験',
+                'products.p1.tag': 'ベストセラー',
+                'products.p1.image': 'クラシック無地シリーズ',
+                'products.p1.name': 'クラシック無地遮光カーテン',
+                'products.p1.desc': 'ミニマルデザイン、どんなインテリアにも合う。豊富なカラー。',
+                'products.p1.price': 'S$89〜',
+                'products.p1.note': 'カスタムサイズ対応',
+                'products.p2.tag': '新製品',
+                'products.p2.image': '高級ジャガードシリーズ',
+                'products.p2.name': '高級ジャガード遮光カーテン',
+                'products.p2.desc': '精巧なジャガード織り、空間の品格を高める。',
+                'products.p2.price': 'S$129〜',
+                'products.p2.note': 'カスタムサイズ対応',
+                'products.p3.image': 'モダンミニマルシリーズ',
+                'products.p3.name': '北欧ミニマル遮光カーテン',
+                'products.p3.desc': '爽やかな色調、心地よい家庭の雰囲気を演出。',
+                'products.p3.price': 'S$99〜',
+                'products.p3.note': 'カスタムサイズ対応',
+                'products.p4.image': 'キッズカートゥーンシリーズ',
+                'products.p4.name': 'キッズカートゥーン遮光カーテン',
+                'products.p4.desc': '可愛いデザイン、お子様の質の高い睡眠を守る。',
+                'products.p4.price': 'S$95〜',
+                'products.p4.note': 'カスタムサイズ対応',
+                'products.p5.tag': '人気商品',
+                'products.p5.image': 'スマート電動シリーズ',
+                'products.p5.name': 'スマート電動遮光カーテン',
+                'products.p5.desc': 'ワンタッチリモコン、スマートホームへアップグレード。',
+                'products.p5.price': 'S$199〜',
+                'products.p5.note': '電動レールシステム込み',
+                'products.p6.image': 'カスタムデザインシリーズ',
+                'products.p6.name': 'オーダーメイド遮光カーテン',
+                'products.p6.desc': 'ニーズに合わせてオーダーメイド、唯一無二のデザイン。',
+                'products.p6.price': 'お問い合わせ',
+                'products.p6.note': '専属デザイナーサービス',
+                'features.title': '選ばれる理由',
+                'features.f1.title': 'プロの三層遮光技術',
+                'features.f1.desc': '独特な三層遮光生地：装飾外層、遮光中層、保護内層。100%遮光効果を保証し、完璧な睡眠環境を実現。',
+                'features.f2.title': '工場直接供給',
+                'features.f2.desc': '自社生産工場により中間業者を排除、最高品質を最良価格で提供、市場価値を遥かに超える。',
+                'features.f3.title': 'シンガポール現地倉庫',
+                'features.f3.desc': 'シンガポールのプロ倉庫に在庫完備、3-5営業日配送、緊急注文には速達サービスあり。',
+                'features.f4.title': '無料採寸・設置',
+                'features.f4.desc': 'プロチームが無料訪問採寸サービスを提供、精密カスタムサイズで窓に完璧フィット。設置ガイドまたはサービス提供。',
+                'features.visual': '三層遮光生地構造<br>プロの遮光技術',
+                'process.title': 'シンプル4ステップ',
+                'process.subtitle': 'ご相談から設置まで、完全プロフェッショナルサービス',
+                'process.step1.title': '閲覧・相談',
+                'process.step1.desc': 'カタログを閲覧、お好みのスタイルを選択、またはプロのアドバイスをお受けください',
+                'process.step2.title': '採寸予約',
+                'process.step2.desc': '予約フォームにご記入、無料訪問窓採寸を手配します',
+                'process.step3.title': '確認・お支払い',
+                'process.step3.desc': '採寸に基づき最終価格を確認、デポジット支払いで製造開始',
+                'process.step4.title': '配送・設置',
+                'process.step4.desc': '3-5日で配送、自己設置またはプロの設置サービスをお選びください',
+                'testimonials.title': 'お客様の声',
+                'testimonials.subtitle': '何千ものシンガポールのお客様に信頼されています',
+                'testimonials.t1.text': '「遮光効果抜群！日中カーテンを閉めると部屋が真っ暗に。ついに快眠できます。価格も手頃で、モールより安い。」',
+                'testimonials.t2.text': '「とてもプロフェッショナル！採寸から設置まで完全サポート。カーテンの品質も優秀、丁寧な仕上がりで期待以上。」',
+                'testimonials.t3.text': '「赤ちゃんの部屋用にカスタム、色と柄がとても可愛い。遮光効果が特に良く、赤ちゃんが昼間もよく眠る。超オススメ！」',
+                'cta.title': '睡眠の質を改善しませんか？',
+                'cta.subtitle': '今すぐご連絡ください、プロの遮光カーテンカスタムサービス',
+                'cta.btn1': '無料採寸',
+                'cta.btn2': 'お問い合わせ',
+                'footer.brand': '遮光カーテン設計・製造に特化<br>シンガポールの家庭に質の高い睡眠を提供',
+                'footer.products.title': '製品',
+                'footer.products.l1': 'クラシック無地シリーズ',
+                'footer.products.l2': '高級ジャガードシリーズ',
+                'footer.products.l3': '北欧ミニマルシリーズ',
+                'footer.products.l4': 'スマート電動シリーズ',
+                'footer.service.title': 'カスタマーサービス',
+                'footer.service.l1': '採寸予約',
+                'footer.service.l2': 'オンライン注文',
+                'footer.service.l3': 'お問い合わせ',
+                'footer.service.l4': 'よくある質問',
+                'footer.contact.title': 'お問い合わせ',
+                'footer.contact.l3': 'WhatsApp',
+                'footer.contact.l4': '営業時間: 9AM-6PM',
+                'footer.copyright': '© 2024 LuxeShade Singapore. All rights reserved. | シンガポール登録企業',
+                'modal.order.title': 'オンライン注文',
+                'modal.order.subtitle': '以下の情報をご記入ください、すぐにご連絡いたします',
+                'modal.order.name': 'お名前 *',
+                'modal.order.phone': '電話番号 *',
+                'modal.order.email': 'メールアドレス',
+                'modal.order.product': '製品選択 *',
+                'modal.order.select': '選択してください',
+                'modal.order.p1': 'クラシック無地遮光カーテン',
+                'modal.order.p2': '高級ジャガード遮光カーテン',
+                'modal.order.p3': '北欧ミニマル遮光カーテン',
+                'modal.order.p4': 'キッズカートゥーン遮光カーテン',
+                'modal.order.p5': 'スマート電動遮光カーテン',
+                'modal.order.p6': 'オーダーメイド遮光カーテン',
+                'modal.order.quantity': '窓の数',
+                'modal.order.notes': '備考',
+                'modal.order.submit': '注文を送信',
+                'modal.appointment.title': '採寸予約',
+                'modal.appointment.subtitle': '無料プロ採寸サービス、ご都合の良い時間をお選びください',
+                'modal.appointment.name': 'お名前 *',
+                'modal.appointment.phone': '電話番号 *',
+                'modal.appointment.address': '住所 *',
+                'modal.appointment.postal': '郵便番号',
+                'modal.appointment.date': '予約日 *',
+                'modal.appointment.time': 'ご希望時間帯 *',
+                'modal.appointment.selectTime': '選択してください',
+                'modal.appointment.morning': '午前 (9AM - 12PM)',
+                'modal.appointment.afternoon': '午後 (2PM - 5PM)',
+                'modal.appointment.evening': '夕方 (5PM - 8PM)',
+                'modal.appointment.notes': '備考',
+                'modal.appointment.submit': '予約を確認',
+                'modal.contact.title': 'お問い合わせ',
+                'modal.contact.subtitle': 'ご質問がありますか？お手伝いします',
+                'modal.contact.name': 'お名前 *',
+                'modal.contact.contact': '連絡先 *',
+                'modal.contact.message': 'メッセージ *',
+                'modal.contact.submit': '送信'
+            },
+            ms: {
+                'lang.current': 'Bahasa Melayu',
+                'nav.products': 'Produk',
+                'nav.features': 'Ciri-ciri',
+                'nav.process': 'Proses',
+                'nav.testimonials': 'Testimoni',
+                'nav.cta': 'Pengukuran Percuma',
+                'hero.title': 'Gelap 100%<br>Kehidupan Berkualiti Bermula Di Sini',
+                'hero.subtitle': 'Terus Dari Kilang · Gudang Tempatan · Perkhidmatan Profesional',
+                'hero.btn1': 'Beli Sekarang',
+                'hero.btn2': 'Tempah Pengukuran',
+                'hero.image': 'Langsir Gelap Premium<br>Pemandangan Bilik Tidur Elegan',
+                'badges.badge1.title': 'Jaminan Gelap 100%',
+                'badges.badge1.desc': 'Fabrik tiga lapisan, menghalang cahaya 100%',
+                'badges.badge2.title': 'Harga Terus Kilang',
+                'badges.badge2.desc': 'Terus dari kilang China, nilai terbaik',
+                'badges.badge3.title': 'Penghantaran Pantas Tempatan',
+                'badges.badge3.desc': 'Gudang Singapura, 3-5 hari penghantaran',
+                'badges.badge4.title': 'Perkhidmatan Tersuai Profesional',
+                'badges.badge4.desc': 'Pengukuran percuma & pemasangan tepat',
+                'products.title': 'Koleksi Pilihan',
+                'products.subtitle': 'Setiap satu direka dengan teliti untuk pengalaman gelap sempurna',
+                'products.p1.tag': 'Terlaris',
+                'products.p1.image': 'Koleksi Klasik Solid',
+                'products.p1.name': 'Langsir Gelap Klasik Solid',
+                'products.p1.desc': 'Reka bentuk minimalis, sesuai semua gaya dekorasi. Pelbagai warna tersedia.',
+                'products.p1.price': 'Dari S$89',
+                'products.p1.note': 'Saiz tersuai tersedia',
+                'products.p2.tag': 'Baru',
+                'products.p2.image': 'Koleksi Mewah Jacquard',
+                'products.p2.name': 'Langsir Gelap Mewah Jacquard',
+                'products.p2.desc': 'Tenunan jacquard halus, meningkatkan keanggunan ruang.',
+                'products.p2.price': 'Dari S$129',
+                'products.p2.note': 'Saiz tersuai tersedia',
+                'products.p3.image': 'Koleksi Moden Minimalis',
+                'products.p3.name': 'Langsir Gelap Nordic Minimalis',
+                'products.p3.desc': 'Ton elegan segar, mewujudkan suasana rumah yang selesa.',
+                'products.p3.price': 'Dari S$99',
+                'products.p3.note': 'Saiz tersuai tersedia',
+                'products.p4.image': 'Koleksi Kartun Kanak-kanak',
+                'products.p4.name': 'Langsir Gelap Kartun Kanak-kanak',
+                'products.p4.desc': 'Corak comel, melindungi tidur berkualiti kanak-kanak.',
+                'products.p4.price': 'Dari S$95',
+                'products.p4.note': 'Saiz tersuai tersedia',
+                'products.p5.tag': 'Popular',
+                'products.p5.image': 'Koleksi Pintar Bermotor',
+                'products.p5.name': 'Langsir Gelap Pintar Bermotor',
+                'products.p5.desc': 'Kawalan jauh satu sentuhan, naik taraf rumah pintar.',
+                'products.p5.price': 'Dari S$199',
+                'products.p5.note': 'Termasuk sistem trek bermotor',
+                'products.p6.image': 'Koleksi Reka Bentuk Tersuai',
+                'products.p6.name': 'Langsir Gelap Tersuai Khas',
+                'products.p6.desc': 'Disesuaikan mengikut keperluan anda, reka bentuk eksklusif yang unik.',
+                'products.p6.price': 'Hubungi Kami',
+                'products.p6.note': 'Perkhidmatan pereka satu-satu',
+                'features.title': 'Mengapa Pilih Kami?',
+                'features.f1.title': 'Teknologi Tiga Lapisan Profesional',
+                'features.f1.desc': 'Fabrik gelap tiga lapisan unik: lapisan luar hiasan, lapisan tengah gelap, lapisan dalam pelindung memastikan 100% penghalang cahaya untuk persekitaran tidur sempurna.',
+                'features.f2.title': 'Bekalan Terus Kilang',
+                'features.f2.desc': 'Kemudahan pengeluaran sendiri menghapuskan perantara, menawarkan kualiti premium pada harga terbaik, jauh melebihi nilai pasaran.',
+                'features.f3.title': 'Gudang Tempatan Singapura',
+                'features.f3.desc': 'Gudang profesional di Singapura dengan stok sedia ada, penghantaran 3-5 hari bekerja, perkhidmatan ekspres tersedia untuk pesanan mendesak.',
+                'features.f4.title': 'Pengukuran & Pemasangan Percuma',
+                'features.f4.desc': 'Pasukan profesional menyediakan perkhidmatan pengukuran di tapak percuma, saiz tersuai tepat memastikan kesesuaian tingkap sempurna. Panduan atau perkhidmatan pemasangan tersedia.',
+                'features.visual': 'Struktur Fabrik Gelap Tiga Lapisan<br>Teknologi Gelap Profesional',
+                'process.title': 'Proses Mudah 4 Langkah',
+                'process.subtitle': 'Dari perundingan hingga pemasangan, perkhidmatan profesional penuh',
+                'process.step1.title': 'Layari & Berunding',
+                'process.step1.desc': 'Layari katalog, pilih gaya kegemaran, atau hubungi kami untuk nasihat profesional',
+                'process.step2.title': 'Tempah Pengukuran',
+                'process.step2.desc': 'Isi borang tempahan, kami akan atur pengukuran tingkap percuma di tapak',
+                'process.step3.title': 'Sahkan & Bayar',
+                'process.step3.desc': 'Sahkan harga akhir berdasarkan pengukuran, bayar deposit untuk mulakan pengeluaran',
+                'process.step4.title': 'Penghantaran & Pasang',
+                'process.step4.desc': 'Penghantaran rumah 3-5 hari, pilih pasang sendiri atau perkhidmatan pemasangan profesional',
+                'testimonials.title': 'Testimoni Pelanggan',
+                'testimonials.subtitle': 'Dipercayai oleh beribu-ribu pelanggan Singapura',
+                'testimonials.t1.text': '"Kesan gelap sangat bagus! Bilik gelap sepenuhnya bila langsir ditutup pada siang hari. Akhirnya boleh tidur lena. Harga juga berpatutan, lebih murah dari pusat membeli-belah."',
+                'testimonials.t2.text': '"Perkhidmatan sangat profesional! Dari pengukuran hingga pemasangan, sokongan penuh. Kualiti langsir cemerlang, kerja terperinci, melebihi jangkaan sepenuhnya."',
+                'testimonials.t3.text': '"Dibuat khas untuk bilik bayi, warna dan corak sangat comel. Kesan gelap terutamanya bagus, bayi sekarang tidur nyenyak pada siang hari. Sangat disyorkan!"',
+                'cta.title': 'Bersedia Untuk Meningkatkan Kualiti Tidur Anda?',
+                'cta.subtitle': 'Hubungi kami sekarang untuk perkhidmatan tersuai langsir gelap profesional',
+                'cta.btn1': 'Pengukuran Percuma',
+                'cta.btn2': 'Hubungi Kami',
+                'footer.brand': 'Pakar dalam reka bentuk & pengeluaran langsir gelap<br>Membawa tidur berkualiti kepada rumah-rumah Singapura',
+                'footer.products.title': 'Produk',
+                'footer.products.l1': 'Siri Klasik Solid',
+                'footer.products.l2': 'Siri Mewah Jacquard',
+                'footer.products.l3': 'Siri Nordic Minimalis',
+                'footer.products.l4': 'Siri Pintar Bermotor',
+                'footer.service.title': 'Perkhidmatan Pelanggan',
+                'footer.service.l1': 'Tempah Pengukuran',
+                'footer.service.l2': 'Pesanan Dalam Talian',
+                'footer.service.l3': 'Hubungi Kami',
+                'footer.service.l4': 'Soalan Lazim',
+                'footer.contact.title': 'Hubungi',
+                'footer.contact.l3': 'WhatsApp',
+                'footer.contact.l4': 'Waktu: 9AM-6PM',
+                'footer.copyright': '© 2024 LuxeShade Singapore. All rights reserved. | Perniagaan Berdaftar Singapura',
+                'modal.order.title': 'Pesanan Dalam Talian',
+                'modal.order.subtitle': 'Sila isi maklumat berikut, kami akan hubungi anda tidak lama lagi',
+                'modal.order.name': 'Nama Anda *',
+                'modal.order.phone': 'Nombor Telefon *',
+                'modal.order.email': 'E-mel',
+                'modal.order.product': 'Pilih Produk *',
+                'modal.order.select': 'Sila pilih',
+                'modal.order.p1': 'Langsir Gelap Klasik Solid',
+                'modal.order.p2': 'Langsir Gelap Mewah Jacquard',
+                'modal.order.p3': 'Langsir Gelap Nordic Minimalis',
+                'modal.order.p4': 'Langsir Gelap Kartun Kanak-kanak',
+                'modal.order.p5': 'Langsir Gelap Pintar Bermotor',
+                'modal.order.p6': 'Langsir Gelap Tersuai Khas',
+                'modal.order.quantity': 'Bilangan Tingkap',
+                'modal.order.notes': 'Nota',
+                'modal.order.submit': 'Hantar Pesanan',
+                'modal.appointment.title': 'Tempah Pengukuran',
+                'modal.appointment.subtitle': 'Perkhidmatan pengukuran profesional percuma, sila pilih masa yang sesuai',
+                'modal.appointment.name': 'Nama Anda *',
+                'modal.appointment.phone': 'Nombor Telefon *',
+                'modal.appointment.address': 'Alamat *',
+                'modal.appointment.postal': 'Poskod',
+                'modal.appointment.date': 'Tarikh Temu Janji *',
+                'modal.appointment.time': 'Masa Pilihan *',
+                'modal.appointment.selectTime': 'Sila pilih',
+                'modal.appointment.morning': 'Pagi (9AM - 12PM)',
+                'modal.appointment.afternoon': 'Petang (2PM - 5PM)',
+                'modal.appointment.evening': 'Malam (5PM - 8PM)',
+                'modal.appointment.notes': 'Nota',
+                'modal.appointment.submit': 'Sahkan Tempahan',
+                'modal.contact.title': 'Hubungi Kami',
+                'modal.contact.subtitle': 'Ada pertanyaan? Kami di sini untuk membantu',
+                'modal.contact.name': 'Nama Anda *',
+                'modal.contact.contact': 'Maklumat Hubungan *',
+                'modal.contact.message': 'Mesej *',
+                'modal.contact.submit': 'Hantar Mesej'
+            }
+        };
+
+        // Current language
+        let currentLanguage = 'en';
+
+        // Language flag mapping
+        const languageFlags = {
+            'en': '🇬🇧',
+            'zh': '🇨🇳',
+            'ja': '🇯🇵',
+            'ms': '🇲🇾'
+        };
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const switcher = document.getElementById('languageSwitcher');
+            switcher.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const switcher = document.getElementById('languageSwitcher');
+            if (switcher && !switcher.contains(event.target)) {
+                switcher.classList.remove('active');
+            }
+        });
+
+        // Change language
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update flag and name
+            document.getElementById('currentFlag').textContent = languageFlags[lang];
+            
+            // Update all text elements
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+
+            // Update document language attribute
+            document.documentElement.lang = lang === 'zh' ? 'zh' : lang === 'ja' ? 'ja' : lang === 'ms' ? 'ms' : 'en';
+
+            // Close dropdown
+            document.getElementById('languageSwitcher').classList.remove('active');
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.closest('.lang-option')?.classList.add('active');
+        }
+
         // Modal functions
         function openModal(type) {
             const modalId = type + 'Modal';
@@ -1326,7 +2065,13 @@
         // Form submission
         function handleSubmit(event, type) {
             event.preventDefault();
-            alert('感谢您的提交！我们会尽快与您联系。\n\nThank you for your submission! We will contact you soon.');
+            const messages = {
+                'en': 'Thank you for your submission! We will contact you soon.',
+                'zh': '感谢您的提交！我们会尽快与您联系。',
+                'ja': 'ご送信ありがとうございます！すぐにご連絡いたします。',
+                'ms': 'Terima kasih atas penghantaran anda! Kami akan menghubungi anda tidak lama lagi.'
+            };
+            alert(messages[currentLanguage]);
             closeModal(type);
             event.target.reset();
         }
@@ -1366,6 +2111,11 @@
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
+        });
+
+        // Initialize with English
+        document.addEventListener('DOMContentLoaded', function() {
+            changeLanguage('en');
         });
     </script>
 </body>
