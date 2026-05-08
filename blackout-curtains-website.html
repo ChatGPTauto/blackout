@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeShade | 新加坡全遮光窗帘专家</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF8F5;
+            --warm-white: #FFFFFF;
+            --soft-gray: #E8E6E3;
+            --medium-gray: #9B9792;
+            --charcoal: #2C2826;
+            --accent-gold: #C8A882;
+            --accent-sage: #A8B5A0;
+            --shadow: rgba(44, 40, 38, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--soft-gray);
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--charcoal);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-nav {
+            background: var(--charcoal);
+            color: var(--warm-white);
+            padding: 0.7rem 1.8rem;
+            border-radius: 2px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .cta-nav:hover {
+            background: var(--accent-gold);
+            color: var(--charcoal);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--medium-gray);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Karla', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--charcoal);
+            color: var(--warm-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-gold);
+            color: var(--charcoal);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(200, 168, 130, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--charcoal);
+            border: 1.5px solid var(--charcoal);
+        }
+
+        .btn-secondary:hover {
+            background: var(--charcoal);
+            color: var(--warm-white);
+        }
+
+        .hero-image {
+            position: relative;
+            height: 600px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .image-frame {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--soft-gray) 0%, var(--warm-white) 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            position: relative;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--medium-gray);
+            background: linear-gradient(135deg, #f5f3f0 0%, #ffffff 100%);
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            background: var(--warm-white);
+            padding: 3rem 0;
+            border-top: 1px solid var(--soft-gray);
+            border-bottom: 1px solid var(--soft-gray);
+        }
+
+        .badges-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .badge {
+            text-align: center;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .badge:nth-child(1) { animation-delay: 0.1s; }
+        .badge:nth-child(2) { animation-delay: 0.2s; }
+        .badge:nth-child(3) { animation-delay: 0.3s; }
+        .badge:nth-child(4) { animation-delay: 0.4s; }
+
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--cream);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .badge h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .badge p {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+            font-weight: 300;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 8rem 0;
+            background: var(--cream);
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 0 3rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: var(--warm-white);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+
+        .product-image {
+            height: 320px;
+            background: linear-gradient(135deg, var(--soft-gray) 0%, var(--cream) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-gold);
+            color: var(--charcoal);
+            padding: 0.4rem 1rem;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .product-info {
+            padding: 1.8rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .product-info p {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            font-weight: 300;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 0;
+            background: var(--warm-white);
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .feature-content h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--cream);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .feature-text p {
+            color: var(--medium-gray);
+            font-size: 0.95rem;
+        }
+
+        .feature-visual {
+            height: 500px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--soft-gray) 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-gray);
+        }
+
+        /* Process Section */
+        .process {
+            padding: 8rem 0;
+            background: var(--cream);
+        }
+
+        .process-steps {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            top: 2.5rem;
+            font-size: 2rem;
+            color: var(--soft-gray);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .step p {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 8rem 0;
+            background: var(--warm-white);
+        }
+
+        .testimonial-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--cream);
+            padding: 2.5rem;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: var(--charcoal);
+        }
+
+        .testimonial-author {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .testimonial-location {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 0;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .cta-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--warm-white);
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--soft-gray);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn-light {
+            background: var(--warm-white);
+            color: var(--charcoal);
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-light:hover {
+            background: var(--accent-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(200, 168, 130, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--warm-white);
+            border: 2px solid var(--warm-white);
+            padding: 1.2rem 3rem;
+            border-radius: 2px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--warm-white);
+            color: var(--charcoal);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: var(--soft-gray);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            color: var(--warm-white);
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-brand p {
+            color: var(--soft-gray);
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            color: var(--warm-white);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.7rem;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 3rem 0;
+            border-top: 1px solid rgba(232, 230, 227, 0.2);
+            text-align: center;
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 40, 38, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--warm-white);
+            padding: 3rem;
+            border-radius: 4px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: modalSlideUp 0.4s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--medium-gray);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--charcoal);
+        }
+
+        .modal h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1.5px solid var(--soft-gray);
+            border-radius: 2px;
+            font-family: 'Karla', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--charcoal);
+            color: var(--warm-white);
+            border: none;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: var(--accent-gold);
+            color: var(--charcoal);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-image {
+                height: 400px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .badges-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step::after {
+                display: none;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badges-container {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">LuxeShade</div>
+            <ul class="nav-links">
+                <li><a href="#products">产品目录</a></li>
+                <li><a href="#features">产品优势</a></li>
+                <li><a href="#process">购买流程</a></li>
+                <li><a href="#testimonials">客户评价</a></li>
+                <li><a href="#" class="cta-nav" onclick="openModal('appointment')">免费预约测量</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>100% 全遮光<br>品质生活从此开始</h1>
+                <p class="hero-subtitle">源头工厂直供 · 新加坡本地仓储 · 专业定制服务</p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="openModal('order')">立即选购</button>
+                    <button class="btn-secondary" onclick="openModal('appointment')">预约上门测量</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-frame">
+                    <div class="image-placeholder">
+                        高端全遮光窗帘展示图<br>
+                        <small style="margin-top: 0.5rem; display: block;">优雅卧室场景</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-badges">
+        <div class="badges-container">
+            <div class="badge">
+                <div class="badge-icon">🌙</div>
+                <h3>100% 全遮光保证</h3>
+                <p>三层遮光面料，遮光率达100%</p>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">💰</div>
+                <h3>工厂直供价格</h3>
+                <p>中国源头工厂，省去中间商差价</p>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">🚚</div>
+                <h3>本地快速配送</h3>
+                <p>新加坡仓库现货，3-5天送达</p>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">✨</div>
+                <h3>专业定制服务</h3>
+                <p>免费上门测量，精准定制安装</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-header">
+            <h2>精选产品系列</h2>
+            <p>每一款都经过精心设计，为您的居家生活带来完美遮光体验</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <span class="product-tag">畅销款</span>
+                    <div>经典纯色系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>经典纯色全遮光帘</h3>
+                    <p>简约百搭，适合各种装修风格。多种颜色可选。</p>
+                    <div class="product-price">S$89起</div>
+                    <div class="price-note">价格根据尺寸定制</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <span class="product-tag">新品</span>
+                    <div>奢华提花系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>奢华提花全遮光帘</h3>
+                    <p>精致提花工艺，提升空间质感与格调。</p>
+                    <div class="product-price">S$129起</div>
+                    <div class="price-note">价格根据尺寸定制</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <div>现代简约系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>北欧简约全遮光帘</h3>
+                    <p>清新淡雅色调，打造舒适温馨居家氛围。</p>
+                    <div class="product-price">S$99起</div>
+                    <div class="price-note">价格根据尺寸定制</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <div>儿童卡通系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>儿童卡通全遮光帘</h3>
+                    <p>可爱图案设计，守护孩子优质睡眠时光。</p>
+                    <div class="product-price">S$95起</div>
+                    <div class="price-note">价格根据尺寸定制</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <span class="product-tag">热销</span>
+                    <div>智能电动系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>智能电动全遮光帘</h3>
+                    <p>一键遥控开合，智能家居轻松升级。</p>
+                    <div class="product-price">S$199起</div>
+                    <div class="price-note">含电动轨道系统</div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal('order')">
+                <div class="product-image">
+                    <div>定制设计系列</div>
+                </div>
+                <div class="product-info">
+                    <h3>专属定制全遮光帘</h3>
+                    <p>根据您的需求量身定制，独一无二的专属设计。</p>
+                    <div class="product-price">联系咨询</div>
+                    <div class="price-note">专业设计师一对一服务</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-grid">
+            <div class="feature-content">
+                <h2>为什么选择我们？</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">🌙</div>
+                        <div class="feature-text">
+                            <h3>专业三层遮光技术</h3>
+                            <p>采用独特的三层遮光面料，外层装饰层、中层遮光层、内层保护层，确保100%遮光效果，营造完美睡眠环境。</p>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">🏭</div>
+                        <div class="feature-text">
+                            <h3>源头工厂直接供应</h3>
+                            <p>拥有自主生产工厂，省去中间商环节，以最优惠的价格为您提供高品质产品，性价比远超市场同类产品。</p>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-text">
+                            <h3>新加坡本地仓储</h3>
+                            <p>在新加坡设有专业仓库，常备现货，下单后3-5个工作日即可送达，急需客户更可享受加急服务。</p>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">📏</div>
+                        <div class="feature-text">
+                            <h3>免费上门测量安装</h3>
+                            <p>专业团队提供免费上门测量服务，精确定制尺寸，确保完美贴合窗户。提供专业安装指导或安装服务。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                三层遮光面料结构示意图<br>
+                <small style="margin-top: 0.5rem; display: block;">展示专业遮光技术</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="section-header">
+            <h2>简单四步，完成定制</h2>
+            <p>从咨询到安装，全程专业服务</p>
+        </div>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>在线咨询选款</h3>
+                <p>浏览产品目录，选择心仪款式，或联系客服获取专业建议</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>预约上门测量</h3>
+                <p>填写预约表单，我们将安排专业人员免费上门测量窗户尺寸</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>确认订单付款</h3>
+                <p>根据测量尺寸确认最终价格，支付订金后开始生产定制</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>配送安装完成</h3>
+                <p>3-5天送货上门，可选择自行安装或预约专业安装服务</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2>客户真实评价</h2>
+            <p>上千位新加坡客户的信赖之选</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"遮光效果非常好！白天拉上窗帘后房间完全黑暗，终于可以好好补眠了。价格也很实惠，比商场便宜很多。"</p>
+                <div class="testimonial-author">Sarah Tan</div>
+                <div class="testimonial-location">Jurong West</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"服务很专业！从测量到安装全程跟进，师傅很细心。窗帘质量也很好，做工精致，完全超出预期。"</p>
+                <div class="testimonial-author">Michael Lim</div>
+                <div class="testimonial-location">Tampines</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"给宝宝房间定制的，颜色和图案都很可爱。遮光效果特别好，宝宝现在白天也能睡得很香。强烈推荐！"</p>
+                <div class="testimonial-author">Lisa Wong</div>
+                <div class="testimonial-location">Bukit Timah</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>准备好改善您的睡眠质量了吗？</h2>
+            <p>立即联系我们，享受专业的全遮光窗帘定制服务</p>
+            <div class="cta-buttons">
+                <button class="btn-light" onclick="openModal('appointment')">免费预约测量</button>
+                <button class="btn-outline" onclick="openModal('contact')">在线咨询</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>LuxeShade</h3>
+                <p>专注全遮光窗帘设计与生产<br>为新加坡家庭带来优质睡眠体验</p>
+            </div>
+            <div class="footer-links">
+                <h4>产品中心</h4>
+                <ul>
+                    <li><a href="#products">经典纯色系列</a></li>
+                    <li><a href="#products">奢华提花系列</a></li>
+                    <li><a href="#products">北欧简约系列</a></li>
+                    <li><a href="#products">智能电动系列</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>客户服务</h4>
+                <ul>
+                    <li><a href="#" onclick="openModal('appointment')">预约测量</a></li>
+                    <li><a href="#" onclick="openModal('order')">在线下单</a></li>
+                    <li><a href="#" onclick="openModal('contact')">联系我们</a></li>
+                    <li><a href="#">常见问题</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>联系方式</h4>
+                <ul>
+                    <li><a href="tel:+6512345678">+65 1234 5678</a></li>
+                    <li><a href="mailto:info@luxeshade.sg">info@luxeshade.sg</a></li>
+                    <li><a href="#">WhatsApp咨询</a></li>
+                    <li><a href="#">工作时间: 9AM-6PM</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LuxeShade Singapore. All rights reserved. | 新加坡注册企业</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('order')">&times;</button>
+            <h2>在线下单</h2>
+            <p>请填写以下信息，我们将尽快与您联系</p>
+            <form onsubmit="handleSubmit(event, 'order')">
+                <div class="form-group">
+                    <label>您的姓名 *</label>
+                    <input type="text" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label>联系电话 *</label>
+                    <input type="tel" required placeholder="+65 1234 5678">
+                </div>
+                <div class="form-group">
+                    <label>电子邮箱</label>
+                    <input type="email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>选择产品系列 *</label>
+                    <select required>
+                        <option value="">请选择</option>
+                        <option>经典纯色全遮光帘</option>
+                        <option>奢华提花全遮光帘</option>
+                        <option>北欧简约全遮光帘</option>
+                        <option>儿童卡通全遮光帘</option>
+                        <option>智能电动全遮光帘</option>
+                        <option>专属定制全遮光帘</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>窗户数量</label>
+                    <input type="number" placeholder="例如: 3">
+                </div>
+                <div class="form-group">
+                    <label>备注说明</label>
+                    <textarea rows="3" placeholder="请告诉我们您的特殊需求或偏好"></textarea>
+                </div>
+                <button type="submit" class="form-submit">提交订单</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('appointment')">&times;</button>
+            <h2>预约上门测量</h2>
+            <p>免费提供专业测量服务，请选择方便的时间</p>
+            <form onsubmit="handleSubmit(event, 'appointment')">
+                <div class="form-group">
+                    <label>您的姓名 *</label>
+                    <input type="text" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label>联系电话 *</label>
+                    <input type="tel" required placeholder="+65 1234 5678">
+                </div>
+                <div class="form-group">
+                    <label>地址 *</label>
+                    <input type="text" required placeholder="请输入详细地址">
+                </div>
+                <div class="form-group">
+                    <label>邮编</label>
+                    <input type="text" placeholder="例如: 123456">
+                </div>
+                <div class="form-group">
+                    <label>预约日期 *</label>
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>偏好时间段 *</label>
+                    <select required>
+                        <option value="">请选择</option>
+                        <option>上午 (9AM - 12PM)</option>
+                        <option>下午 (2PM - 5PM)</option>
+                        <option>傍晚 (5PM - 8PM)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>备注</label>
+                    <textarea rows="2" placeholder="其他需要说明的信息"></textarea>
+                </div>
+                <button type="submit" class="form-submit">确认预约</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contact')">&times;</button>
+            <h2>在线咨询</h2>
+            <p>有任何问题？我们随时为您解答</p>
+            <form onsubmit="handleSubmit(event, 'contact')">
+                <div class="form-group">
+                    <label>您的姓名 *</label>
+                    <input type="text" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label>联系方式 *</label>
+                    <input type="text" required placeholder="电话或邮箱">
+                </div>
+                <div class="form-group">
+                    <label>咨询内容 *</label>
+                    <textarea rows="5" required placeholder="请详细描述您的问题或需求"></textarea>
+                </div>
+                <button type="submit" class="form-submit">发送咨询</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(type) {
+            const modalId = type + 'Modal';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(type) {
+            const modalId = type + 'Modal';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Form submission
+        function handleSubmit(event, type) {
+            event.preventDefault();
+            alert('感谢您的提交！我们会尽快与您联系。\n\nThank you for your submission! We will contact you soon.');
+            closeModal(type);
+            event.target.reset();
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.product-card, .badge, .step, .testimonial-card, .feature-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
